@@ -9,7 +9,13 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(message_filters REQUIRED)
-find_package(std_msgs REQUIRED)
+find_package(sensor_msgs REQUIRED)
+
+add_executable(exact_time_sync_node src/exact_time_sync_node.cpp)
+ament_target_dependencies(exact_time_sync_node rclcpp message_filters sensor_msgs)
+
+add_executable(approx_time_sync_node src/approx_time_sync_node.cpp)
+ament_target_dependencies(approx_time_sync_node rclcpp message_filters sensor_msgs)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
