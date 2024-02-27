@@ -20,7 +20,7 @@ public:
         auto rmw_qos_profile = qos_policy.get_rmw_qos_profile();
         image_sub_.subscribe(this, "/camera_1/image_raw", rmw_qos_profile);
         camera_info_sub_.subscribe(this, "/camera_1/camera_info", rmw_qos_profile);
-        camera_info_sync_ = std::make_shared<CameraInfoSynchronizer>(10, image_sub_, camera_info_sub_);
+        camera_info_sync_ = std::make_shared<CameraInfoSynchronizer>(image_sub_, camera_info_sub_, 10); 
         camera_info_sync_->registerCallback(std::bind(&ExactTimeSyncNode::sensor_callback, this, _1, _2));
     }
 
