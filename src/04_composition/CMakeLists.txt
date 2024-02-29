@@ -12,6 +12,40 @@ find_package(rclcpp_lifecycle REQUIRED)
 find_package(rclcpp_components REQUIRED)
 find_package(std_msgs REQUIRED)
 
+add_library(
+  arwo_components SHARED 
+  src/heartbeat_pub_component.cpp
+  src/heartbeat_sub_component.cpp
+  src/listener_component.cpp
+  src/lifecycle_talker_component.cpp
+)
+
+ament_target_dependencies(
+  arwo_components 
+  "rclcpp"
+  "rclcpp_lifecycle"
+  "rclcpp_components"
+  "std_msgs"
+)
+
+rclcpp_components_register_nodes(
+  arwo_components 
+  "arwo::HeartbeatPubComponent"
+  "arwo::HeartbeatSubComponent"
+  "arwo::ListenerComponent"
+  "arwo::LifecycleTalkerComponent"
+)
+
+install(
+  TARGETS arwo_components
+  DESTINATION lib
+)
+
+install(
+  DIRECTORY launch
+  DESTINATION share/${PROJECT_NAME}
+)
+
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
   # the following line skips the linter which checks for copyrights
