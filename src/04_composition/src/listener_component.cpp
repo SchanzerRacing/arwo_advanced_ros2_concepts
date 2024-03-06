@@ -9,7 +9,11 @@ namespace arwo
 ListenerNode::ListenerNode(const rclcpp::NodeOptions& options)
     : Node("listener", options)
 {
-    chatter_sub_ = create_subscription<std_msgs::msg::String>("chatter", 10, std::bind(&ListenerNode::chatter_callback, this, _1));
+    chatter_sub_ = create_subscription<std_msgs::msg::String>(
+        "chatter", 
+        10, 
+        std::bind(&ListenerNode::chatter_callback, this, _1)
+    );
 }
 
 void ListenerNode::chatter_callback(const std_msgs::msg::String::SharedPtr msg)
