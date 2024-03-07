@@ -11,6 +11,22 @@ find_package(rclcpp REQUIRED)
 find_package(rclcpp_lifecycle REQUIRED)
 find_package(std_msgs REQUIRED)
 
+add_executable(lifecycle_listener_node src/lifecycle_listener_node.cpp)
+ament_target_dependencies(lifecycle_listener_node rclcpp rclcpp_lifecycle std_msgs)
+
+add_executable(lifecycle_talker_node src/lifecycle_talker_node.cpp)
+ament_target_dependencies(lifecycle_talker_node rclcpp rclcpp_lifecycle std_msgs)
+
+install(
+  TARGETS lifecycle_listener_node lifecycle_talker_node
+  DESTINATION lib
+)
+
+install(
+  DIRECTORY launch
+  DESTINATION share/${PROJECT_NAME}
+)
+
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
   # the following line skips the linter which checks for copyrights

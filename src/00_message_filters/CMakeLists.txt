@@ -17,6 +17,16 @@ ament_target_dependencies(exact_time_sync_node rclcpp message_filters sensor_msg
 add_executable(approx_time_sync_node src/approx_time_sync_node.cpp)
 ament_target_dependencies(approx_time_sync_node rclcpp message_filters sensor_msgs)
 
+install(
+  TARGETS exact_time_sync_node approx_time_sync_node
+  DESTINATION lib
+)
+
+install(
+  DIRECTORY launch images
+  DESTINATION share/${PROJECT_NAME}
+)
+
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
   # the following line skips the linter which checks for copyrights

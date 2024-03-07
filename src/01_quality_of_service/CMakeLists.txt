@@ -10,6 +10,22 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 
+add_executable(reliable_publisher_node src/reliable_publisher_node.cpp)
+ament_target_dependencies(reliable_publisher_node rclcpp std_msgs)
+
+add_executable(reliable_subscriber_node src/reliable_subscriber_node.cpp)
+ament_target_dependencies(reliable_subscriber_node rclcpp std_msgs)
+
+install(
+  TARGETS reliable_publisher_node reliable_subscriber_node
+  DESTINATION lib
+)
+
+install(
+  DIRECTORY launch
+  DESTINATION share/${PROJECT_NAME}
+)
+
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
   # the following line skips the linter which checks for copyrights
