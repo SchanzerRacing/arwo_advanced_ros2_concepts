@@ -1,23 +1,45 @@
 from launch import LaunchDescription
+from launch.substitutions import PathJoinSubstitution
+from launch_ros.substitutions import FindPackageShare
 from launch_ros.actions import Node
 
 def generate_launch_description():
+    image_dir = PathJoinSubstitution([FindPackageShare('00_message_filters'), 'images'])
+
     image1_pub_node = Node(
-        package='',
-        executable='',
+        package='image_publisher',
+        executable='image_publisher_node',
         namespace='arwo',
         name='image1_pub_node',
-        output='both',
+        output='screen',
+        parameters=[
+            {'frame_id': 'camera_1'},
+            {'publish_rate': 29},
+            {'camera_info_url': 'package://00_message_filters/config/camera_1_info.yaml'},
+            {'filename': PathJoinSubstitution([image_dir, 'left.png'])}
+        ],
         remappings=[
+            ('image_raw', 'camera_1/image_raw'),
+            ('camera_info', 'camera_1/camera_info')
         ]
     )
 
     image2_pub_node = Node(
-        package='',
-        executable='',
+        package='image_publisher',
+        executable='image_publisher_node',
         namespace='arwo',
         name='image2_pub_node',
-        output='both'
+        output='screen',
+        parameters=[
+            {'frame_id': 'camera_2'},
+            {'publish_rate': 30},
+            {'camera_info_url': 'package://00_message_filters/config/camera_2_info.yaml'},
+            {'filename': PathJoinSubstitution([image_dir, 'right.png'])}
+        ],
+        remappings=[
+            ('image_raw', 'camera_2/image_raw'),
+            ('camera_info', 'camera_2/camera_info')
+        ]
     )
 
     approx_time_sync_node = Node(
