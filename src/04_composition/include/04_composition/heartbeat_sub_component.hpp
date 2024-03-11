@@ -15,7 +15,7 @@ public:
 
 private:
     rclcpp::Subscription<std_msgs::msg::Header>::SharedPtr heartbeat_sub_;
-}
+};
 
 } // namespace arwo
 

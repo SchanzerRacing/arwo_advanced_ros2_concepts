@@ -17,7 +17,7 @@ public:
         qos_policy.reliable();
 
         header_pub_ = create_publisher<std_msgs::msg::Header>("/reliable_topic", qos_policy);
-        timer_ = create_wall_timer(1s, std::bind(&ReliablePublisherNode::timer_callback, this))
+        timer_ = create_wall_timer(1s, std::bind(&ReliablePublisherNode::timer_callback, this));
     }
 
     void timer_callback()

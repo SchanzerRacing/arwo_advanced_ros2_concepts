@@ -8,9 +8,10 @@
 namespace arwo
 {
 
+using LNI = rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface;
+
 class LifecycleTalkerNode : public rclcpp_lifecycle::LifecycleNode
 {
-    using LNI = rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface;
 public:
     LifecycleTalkerNode(const rclcpp::NodeOptions& options);
     LNI::CallbackReturn on_configure(const rclcpp_lifecycle::State& state);
@@ -18,7 +19,7 @@ public:
     void timer_callback();
 
 private:
-    rclcpp_lifecycle::LiefcyclePublisher<std_msgs::msg::String>::SharedPtr chatter_pub_;
+    rclcpp_lifecycle::LifecyclePublisher<std_msgs::msg::String>::SharedPtr chatter_pub_;
     rclcpp::TimerBase::SharedPtr timer_;
 };
 

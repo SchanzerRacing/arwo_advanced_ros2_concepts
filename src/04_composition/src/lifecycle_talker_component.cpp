@@ -7,7 +7,7 @@ namespace arwo
 {
 
 LifecycleTalkerNode::LifecycleTalkerNode(const rclcpp::NodeOptions& options)
-    : Node("talker", options)
+    : LifecycleNode("talker", options)
 {
 }
 

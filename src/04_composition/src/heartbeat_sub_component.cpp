@@ -20,7 +20,8 @@ HeartbeatSubNode::HeartbeatSubNode(const rclcpp::NodeOptions& options)
 
 void HeartbeatSubNode::heartbeat_callback(const std_msgs::msg::Header::SharedPtr msg)
 {
-    RCLCPP_INFO(get_logger(), "Received heartbeat from %s at %f", msg->frame_id.c_str(), msg->stamp.seconds());
+    rclcpp::Time stamp(msg->stamp);
+    RCLCPP_INFO(get_logger(), "Received heartbeat from %s at %f", msg->frame_id.c_str(), stamp.seconds());
 }
 
 } // namepsace arwo
