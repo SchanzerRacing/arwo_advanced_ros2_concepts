@@ -20,6 +20,13 @@ add_library(
   src/lifecycle_talker_component.cpp
 )
 
+target_include_directories(
+  arwo_components
+  PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>
+)
+
 ament_target_dependencies(
   arwo_components 
   "rclcpp"
@@ -36,9 +43,21 @@ rclcpp_components_register_nodes(
   "arwo::LifecycleTalkerComponent"
 )
 
+add_executable(manual_listener_composition src/manual_listener_composition.cpp)
+ament_target_dependencies(manual_listener_composition rclcpp)
+target_link_libraries(manual_listener_composition arwo_components)
+
+add_executable(manual_talker_composition src/manual_talker_composition.cpp)
+ament_target_dependencies(manual_talker_composition rclcpp)
+target_link_libraries(manual_talker_composition arwo_components)
+
 install(
-  TARGETS arwo_components
-  DESTINATION lib
+  TARGETS 
+    arwo_components
+    manual_listener_composition
+    manual_talker_composition
+  DESTINATION 
+    lib
 )
 
 install(
