@@ -13,6 +13,7 @@ RUN apt update -q \
     xauth \
     ros-humble-rqt \
     ros-humble-rqt-common-plugins \
+    ros-humble-nav2-lifecycle-manager \
     && apt clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 

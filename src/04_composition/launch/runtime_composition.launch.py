@@ -1,7 +1,5 @@
 from launch import LaunchDescription
-from launch.actions import ExecuteProcess, TimerAction, RegisterEventHandler
-from launch.event_handlers import OnProcessExit
-from launch_ros.actions import ComposableNodeContainer
+from launch_ros.actions import Node, ComposableNodeContainer
 from launch_ros.descriptions import ComposableNode
 
 def generate_launch_description():
@@ -49,26 +47,19 @@ def generate_launch_description():
         ]
     )
 
-    configure_lifecycle_talker_node = ExecuteProcess(
-        name='configure_socket_can_receiver',
-        cmd=['ros2', 'lifecycle', 'set', 'arwo/lifecycle_talker_node', 'configure']
-    )
-
-    activate_lifecycle_talker_node = ExecuteProcess(
-        name='configure_socket_can_receiver',
-        cmd=['ros2', 'lifecycle', 'set', 'arwo/lifecycle_talker_node', 'activate']
-    )
-
-    configure_lifecycle_talker_node_timer = TimerAction(
-        period=2.0,
-        actions=[configure_lifecycle_talker_node]
-    )
-
-    activate_lifecycle_talker_node_event = RegisterEventHandler(
-        event_handler=OnProcessExit(
-            target_action=configure_lifecycle_talker_node,
-            on_exit=[activate_lifecycle_talker_node],
-        )
+    lifecycle_manager = Node(
+        package='nav2_lifecycle_manager',
+        executable='lifecycle_manager',
+        namespace='arwo',
+        name='lifecycle_manager',
+        output='both',
+        parameters=[
+            {'autostart': True},
+            {'node_names': ['arwo/lifecycle_talker_node']},
+            {'bond_timeout': 4.0},
+            {'attempt_respawn_reconnection': True},
+            {'bond_respawn_max_duration': 10.0}
+        ]
     )
 
     return LaunchDescription([
