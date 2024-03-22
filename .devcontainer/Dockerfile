@@ -14,6 +14,7 @@ RUN apt update -q \
     ros-humble-rqt \
     ros-humble-rqt-common-plugins \
     ros-humble-nav2-lifecycle-manager \
+    ros-humble-image-publisher \
     && apt clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
