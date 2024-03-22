@@ -68,7 +68,11 @@ add_executable(dlopen_composition src/dlopen_composition.cpp)
 ament_target_dependencies(dlopen_composition class_loader rclcpp rclcpp_components)
 
 install(
-  TARGETS arwo_components
+  TARGETS 
+    heartbeat_pub_component
+    heartbeat_sub_component
+    listener_component
+    lifecycle_talker_component
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin
@@ -80,8 +84,7 @@ install(
     manual_talker_composition
     linktime_listener_composition
     linktime_talker_composition
-    dlopen_listener_composition
-    dlopen_talker_composition
+    dlopen_composition
   DESTINATION lib/${PROJECT_NAME}
 )
 
