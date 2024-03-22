@@ -12,52 +12,77 @@ find_package(rclcpp_lifecycle REQUIRED)
 find_package(rclcpp_components REQUIRED)
 find_package(std_msgs REQUIRED)
 
-add_library(
-  arwo_components SHARED 
-  src/heartbeat_pub_component.cpp
-  src/heartbeat_sub_component.cpp
-  src/listener_component.cpp
-  src/lifecycle_talker_component.cpp
-)
+add_library(heartbeat_pub_component 
+  SHARED src/heartbeat_pub_component.cpp)
+target_include_directories(heartbeat_pub_component 
+  PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include> $<INSTALL_INTERFACE:include>)
+ament_target_dependencies(heartbeat_pub_component 
+  "rclcpp" "rclcpp_lifecycle" "rclcpp_components" "std_msgs")
+rclcpp_components_register_nodes(heartbeat_pub_component 
+  "arwo::HeartbeatPubComponent")
 
-target_include_directories(
-  arwo_components
-  PUBLIC
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  $<INSTALL_INTERFACE:include>
-)
+add_library(heartbeat_sub_component 
+  SHARED src/heartbeat_sub_component.cpp)
+target_include_directories(heartbeat_sub_component 
+  PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include> $<INSTALL_INTERFACE:include>)
+ament_target_dependencies(heartbeat_sub_component 
+  "rclcpp" "rclcpp_lifecycle" "rclcpp_components" "std_msgs")
+rclcpp_components_register_nodes(heartbeat_sub_component
+  "arwo::HeartbeatSubComponent")
 
-ament_target_dependencies(
-  arwo_components 
-  "rclcpp"
-  "rclcpp_lifecycle"
-  "rclcpp_components"
-  "std_msgs"
-)
+add_library(listener_component 
+  SHARED src/listener_component.cpp)
+target_include_directories(listener_component 
+  PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include> $<INSTALL_INTERFACE:include>)
+ament_target_dependencies(listener_component 
+  "rclcpp" "rclcpp_lifecycle" "rclcpp_components" "std_msgs")
+rclcpp_components_register_nodes(listener_component
+  "arwo::ListenerComponent")
 
-rclcpp_components_register_nodes(
-  arwo_components 
-  "arwo::HeartbeatPubComponent"
-  "arwo::HeartbeatSubComponent"
-  "arwo::ListenerComponent"
-  "arwo::LifecycleTalkerComponent"
-)
+add_library(lifecycle_talker_component 
+  SHARED src/lifecycle_talker_component.cpp)
+target_include_directories(lifecycle_talker_component 
+  PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include> $<INSTALL_INTERFACE:include>)
+ament_target_dependencies(lifecycle_talker_component 
+  "rclcpp" "rclcpp_lifecycle" "rclcpp_components" "std_msgs")
+rclcpp_components_register_nodes(lifecycle_talker_component
+  "arwo::LifecycleTalkerComponent")
 
 add_executable(manual_listener_composition src/manual_listener_composition.cpp)
+target_link_libraries(manual_listener_composition heartbeat_sub_component listener_component)
 ament_target_dependencies(manual_listener_composition rclcpp)
-target_link_libraries(manual_listener_composition arwo_components)
 
 add_executable(manual_talker_composition src/manual_talker_composition.cpp)
+target_link_libraries(manual_talker_composition heartbeat_pub_component lifecycle_talker_component)
 ament_target_dependencies(manual_talker_composition rclcpp)
-target_link_libraries(manual_talker_composition arwo_components)
+
+add_executable(linktime_listener_composition src/linktime_composition.cpp)
+target_link_libraries(linktime_listener_composition heartbeat_sub_component listener_component)
+ament_target_dependencies(linktime_listener_composition class_loader rclcpp rclcpp_components)
+
+add_executable(linktime_talker_composition src/linktime_composition.cpp)
+target_link_libraries(linktime_talker_composition heartbeat_pub_component lifecycle_talker_component)
+ament_target_dependencies(linktime_talker_composition class_loader rclcpp rclcpp_components)
+
+add_executable(dlopen_composition src/dlopen_composition.cpp)
+ament_target_dependencies(dlopen_composition class_loader rclcpp rclcpp_components)
 
 install(
-  TARGETS 
-    arwo_components
+  TARGETS arwo_components
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+  RUNTIME DESTINATION bin
+)
+
+install(
+  TARGETS
     manual_listener_composition
     manual_talker_composition
-  DESTINATION 
-    lib
+    linktime_listener_composition
+    linktime_talker_composition
+    dlopen_listener_composition
+    dlopen_talker_composition
+  DESTINATION lib/${PROJECT_NAME}
 )
 
 install(
