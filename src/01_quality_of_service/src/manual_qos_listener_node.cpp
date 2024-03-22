@@ -7,20 +7,26 @@ using namespace std::placeholders;
 namespace arwo
 {
 
-class ReliableSubscriberNode : public rclcpp::Node
+class ManualQosListenerNode : public rclcpp::Node
 {
 public:
-    ReliableSubscriberNode()
-        : Node("reliable_subscriber_node")
+    ManualQosListenerNode()
+        : Node("manual_qos_listener")
     {
         rclcpp::QoS qos_profile(10);
-        qos_profile.reliable();
+        //qos_profile.history();
+        //qos_profile.depth();
+        qos_profile.best_effort();
         qos_profile.durability_volatile();
+        qos_profile.deadline(100ms);
+        qos_profile.lifespan(100ms);
+        //qos_profile.liveliness();
+        qos_profile.liveliness_lease_duration(100ms);
 
         reliable_sub_ = create_subscription<std_msgs::msg::Header>(
-            "/reliable_topic", 
+            "/manual_qos_chatter", 
             qos_profile,
-            std::bind(&ReliableSubscriberNode::callback, this, _1)
+            std::bind(&ManualQosListenerNode::callback, this, _1)
         );
     }
 
@@ -39,7 +45,7 @@ private:
 int main(int argc, char *argv[])
 {
     rclcpp::init(argc, argv);
-    rclcpp::spin(std::make_shared<arwo::ReliableSubscriberNode>());
+    rclcpp::spin(std::make_shared<arwo::ManualQosListenerNode>());
     rclcpp::shutdown();
     return 0;
 }

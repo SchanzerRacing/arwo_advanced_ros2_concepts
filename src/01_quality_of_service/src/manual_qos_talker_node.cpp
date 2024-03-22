@@ -7,17 +7,17 @@ using namespace std::placeholders;
 namespace arwo
 {
 
-class ReliablePublisherNode : public rclcpp::Node
+class ManualQosTalkerNode : public rclcpp::Node
 {
 public:
-    ReliablePublisherNode()
-        : Node("reliable_publisher_node")
+    ManualQosTalkerNode()
+        : Node("manual_qos_talker")
     {
         rclcpp::QoS qos_policy(10);
         qos_policy.reliable();
 
-        header_pub_ = create_publisher<std_msgs::msg::Header>("/reliable_topic", qos_policy);
-        timer_ = create_wall_timer(1s, std::bind(&ReliablePublisherNode::timer_callback, this));
+        header_pub_ = create_publisher<std_msgs::msg::Header>("/manual_qos_chatter", qos_policy);
+        timer_ = create_wall_timer(1s, std::bind(&ManualQosTalkerNode::timer_callback, this));
     }
 
     void timer_callback()
@@ -37,7 +37,7 @@ private:
 int main(int argc, char *argv[])
 {
     rclcpp::init(argc, argv);
-    rclcpp::spin(std::make_shared<arwo::ReliablePublisherNode>());
+    rclcpp::spin(std::make_shared<arwo::ManualQosTalkerNode>());
     rclcpp::shutdown();
     return 0;
 }
