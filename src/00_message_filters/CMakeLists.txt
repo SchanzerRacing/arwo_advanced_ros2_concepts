@@ -19,7 +19,7 @@ ament_target_dependencies(approx_time_sync_node rclcpp message_filters sensor_ms
 
 install(
   TARGETS exact_time_sync_node approx_time_sync_node
-  DESTINATION lib
+  DESTINATION lib/${PROJECT_NAME}
 )
 
 install(

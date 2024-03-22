@@ -14,7 +14,7 @@ def generate_launch_description():
         output='screen',
         parameters=[
             {'frame_id': 'camera_1'},
-            {'publish_rate': 29},
+            {'publish_rate': 29.0},
             {'camera_info_url': 'package://00_message_filters/config/camera_1_info.yaml'},
             {'filename': PathJoinSubstitution([image_dir, 'left.png'])}
         ],
@@ -32,7 +32,7 @@ def generate_launch_description():
         output='screen',
         parameters=[
             {'frame_id': 'camera_2'},
-            {'publish_rate': 30},
+            {'publish_rate': 30.0},
             {'camera_info_url': 'package://00_message_filters/config/camera_2_info.yaml'},
             {'filename': PathJoinSubstitution([image_dir, 'right.png'])}
         ],
