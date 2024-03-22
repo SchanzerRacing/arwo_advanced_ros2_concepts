@@ -25,12 +25,16 @@ public:
             10,
             std::bind(&LifecycleListenerNode::chatter_callback, this, _1)
         );
+
+        return LNI::CallbackReturn::SUCCESS;
     }
 
     LNI::CallbackReturn on_cleanup(const rclcpp_lifecycle::State& state)
     {
         (void) state;
         chatter_sub_.reset();
+
+        return LNI::CallbackReturn::SUCCESS;
     }
 
     void chatter_callback(const std_msgs::msg::String::SharedPtr msg)

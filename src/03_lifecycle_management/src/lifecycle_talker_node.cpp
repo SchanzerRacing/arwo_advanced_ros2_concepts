@@ -22,6 +22,8 @@ public:
 
         chatter_pub_ = create_publisher<std_msgs::msg::String>("/chatter", 10);
         chatter_timer_ = create_wall_timer(1s, std::bind(&LifecycleTalkerNode::timer_callback, this));
+
+        return LNI::CallbackReturn::SUCCESS;
     }
 
     LNI::CallbackReturn on_cleanup(const rclcpp_lifecycle::State& state)
@@ -31,6 +33,8 @@ public:
         chatter_pub_.reset();
         chatter_timer_->cancel();
         chatter_timer_.reset();
+
+        return LNI::CallbackReturn::SUCCESS;
     }
 
     void timer_callback()
