@@ -10,15 +10,15 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 
-add_executable(reliable_publisher_node src/reliable_publisher_node.cpp)
-ament_target_dependencies(reliable_publisher_node rclcpp std_msgs)
+add_executable(manual_qos_listener_node src/manual_qos_listener_node.cpp)
+ament_target_dependencies(manual_qos_listener_node rclcpp std_msgs)
 
-add_executable(reliable_subscriber_node src/reliable_subscriber_node.cpp)
-ament_target_dependencies(reliable_subscriber_node rclcpp std_msgs)
+add_executable(manual_qos_talker_node src/manual_qos_talker_node.cpp)
+ament_target_dependencies(manual_qos_talker_node rclcpp std_msgs)
 
 install(
-  TARGETS reliable_publisher_node reliable_subscriber_node
-  DESTINATION lib
+  TARGETS manual_qos_listener_node manual_qos_talker_node
+  DESTINATION lib/${PROJECT_NAME}
 )
 
 install(
