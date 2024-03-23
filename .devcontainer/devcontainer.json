@@ -36,6 +36,11 @@
   "workspaceMount": "source=${localWorkspaceFolder},target=/home/rosdev/ros2_ws,type=bind",
   "mounts": [],
   "runArgs": [
-      "--net=host"
-  ]
+      "--net=host",
+      "--ipc=host",
+      "--env=DISPLAY"
+  ],
+  "remoteEnv": {
+    "QT_X11_NO_MITSHM": "1"
+  }
 }
