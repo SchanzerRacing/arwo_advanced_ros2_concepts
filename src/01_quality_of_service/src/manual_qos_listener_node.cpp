@@ -14,13 +14,15 @@ public:
         : Node("manual_qos_listener")
     {
         rclcpp::QoS qos_profile(10);
-        //qos_profile.history();
-        //qos_profile.depth();
+        //qos_profile.keep_all();
         qos_profile.best_effort();
+        //qos_profile.reliable();
+        //qos_profile.transient_local();
         qos_profile.durability_volatile();
         qos_profile.deadline(100ms);
         qos_profile.lifespan(100ms);
-        //qos_profile.liveliness();
+        qos_profile.liveliness(rclcpp::LivelinessPolicy::Automatic);
+        //qos_profile.liveliness(rclcpp::LivelinessPolicy::ManualByTopic);
         qos_profile.liveliness_lease_duration(100ms);
 
         reliable_sub_ = create_subscription<std_msgs::msg::Header>(

@@ -20,7 +20,7 @@ public:
                 rclcpp::QosPolicyKind::History,
                 rclcpp::QosPolicyKind::Reliability
             },
-            [](const rclcpp::QoS &qos) {
+            [](const rclcpp::QoS& qos) {
                 rclcpp::QosCallbackResult result;
                 result.successful = false;
                 if (qos.depth() > 10u) {
@@ -32,7 +32,11 @@ public:
             }
         };
 
-        pub_ = create_publisher<std_msgs::msg::Header>("/qos_overrides_chatter", 1, pub_options);
+        pub_ = create_publisher<std_msgs::msg::Header>(
+            "/qos_overrides_chatter", 
+            1, 
+            pub_options
+        );
         timer_ = create_wall_timer(1s, std::bind(&QosOverridesTalkerNode::timer_callback, this));
     }
 

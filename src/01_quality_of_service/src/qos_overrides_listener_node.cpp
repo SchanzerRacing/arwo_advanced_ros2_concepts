@@ -20,7 +20,7 @@ public:
                 rclcpp::QosPolicyKind::History,
                 rclcpp::QosPolicyKind::Reliability,
             },
-            [](const rclcpp::QoS & qos) {
+            [](const rclcpp::QoS& qos) {
                 rclcpp::QosCallbackResult result;
                 result.successful = false;
                 if (qos.depth() > 10u) {

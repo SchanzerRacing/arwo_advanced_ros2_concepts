@@ -7,4 +7,4 @@
           depth: 5
         subscription:
           reliability: reliable
-          depth: 5
+          depth: 11

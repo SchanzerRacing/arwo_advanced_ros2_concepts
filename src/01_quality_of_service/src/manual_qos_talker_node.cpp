@@ -13,10 +13,19 @@ public:
     ManualQosTalkerNode()
         : Node("manual_qos_talker")
     {
-        rclcpp::QoS qos_policy(10);
-        qos_policy.reliable();
+        rclcpp::QoS qos_profile(10);
+        //qos_profile.keep_all();
+        qos_profile.best_effort();
+        //qos_profile.reliable();
+        //qos_profile.transient_local();
+        qos_profile.durability_volatile();
+        qos_profile.deadline(100ms);
+        qos_profile.lifespan(100ms);
+        qos_profile.liveliness(rclcpp::LivelinessPolicy::Automatic);
+        //qos_profile.liveliness(rclcpp::LivelinessPolicy::ManualByTopic);
+        qos_profile.liveliness_lease_duration(100ms);
 
-        header_pub_ = create_publisher<std_msgs::msg::Header>("/manual_qos_chatter", qos_policy);
+        header_pub_ = create_publisher<std_msgs::msg::Header>("/manual_qos_chatter", qos_profile);
         timer_ = create_wall_timer(1s, std::bind(&ManualQosTalkerNode::timer_callback, this));
     }
 

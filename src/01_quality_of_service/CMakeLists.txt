@@ -16,13 +16,23 @@ ament_target_dependencies(manual_qos_listener_node rclcpp std_msgs)
 add_executable(manual_qos_talker_node src/manual_qos_talker_node.cpp)
 ament_target_dependencies(manual_qos_talker_node rclcpp std_msgs)
 
+add_executable(qos_overrides_listener_node src/qos_overrides_listener_node.cpp)
+ament_target_dependencies(qos_overrides_listener_node rclcpp std_msgs)
+
+add_executable(qos_overrides_talker_node src/qos_overrides_talker_node.cpp)
+ament_target_dependencies(qos_overrides_talker_node rclcpp std_msgs)
+
 install(
-  TARGETS manual_qos_listener_node manual_qos_talker_node
+  TARGETS 
+    manual_qos_listener_node 
+    manual_qos_talker_node
+    qos_overrides_listener_node
+    qos_overrides_talker_node
   DESTINATION lib/${PROJECT_NAME}
 )
 
 install(
-  DIRECTORY launch
+  DIRECTORY launch config
   DESTINATION share/${PROJECT_NAME}
 )
 
