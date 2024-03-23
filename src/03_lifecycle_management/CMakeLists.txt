@@ -19,7 +19,7 @@ ament_target_dependencies(lifecycle_talker_node rclcpp rclcpp_lifecycle std_msgs
 
 install(
   TARGETS lifecycle_listener_node lifecycle_talker_node
-  DESTINATION lib
+  DESTINATION lib/${PROJECT_NAME}
 )
 
 install(
