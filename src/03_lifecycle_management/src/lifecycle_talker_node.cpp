@@ -20,7 +20,7 @@ public:
     {
         (void) state;
 
-        chatter_pub_ = create_publisher<std_msgs::msg::String>("/chatter", 10);
+        chatter_pub_ = create_publisher<std_msgs::msg::String>("chatter", 10);
         chatter_timer_ = create_wall_timer(1s, std::bind(&LifecycleTalkerNode::timer_callback, this));
 
         return LNI::CallbackReturn::SUCCESS;
