@@ -7,7 +7,7 @@ from lifecycle_msgs.msg import Transition
 
 def generate_launch_description():
     talker_node = LifecycleNode(
-        packge='03_lifecycle_management',
+        package='03_lifecycle_management',
         executable='lifecycle_talker_node',
         namespace='arwo',
         name='lifecycle_talker_node',
