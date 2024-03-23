@@ -1,0 +1,10 @@
+/**:
+  ros__parameters:
+    qos_overrides:
+      /qos_overrides_chatter:
+        publisher:
+          reliability: reliable
+          depth: 5
+        subscription:
+          reliability: reliable
+          depth: 11
