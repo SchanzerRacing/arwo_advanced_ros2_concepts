@@ -1,10 +1,13 @@
-name: CI
+name: CD
 
-on: push
+on:
+  push:
+    tags:
+      - 'v*'
 
 jobs:
-  build-and-test:
-    name: Build and Test
+  release:
+    name: Build and Release
     runs-on: self-hosted
     steps:
       - name: Checkout
@@ -26,4 +29,9 @@ jobs:
             ". /opt/ros/humble/setup.bash
             && colcon build
             && colcon test --return-code-on-test-failure
-            && colcon test-result --verbose"
+            && .devcontainer/build_debs.sh"
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: src/*.deb
