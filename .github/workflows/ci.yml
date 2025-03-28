@@ -5,7 +5,7 @@ on: push
 jobs:
   checkout:
     name: Build and test
-    runs-on: ubuntu-22.04
+    runs-on: self-hosted
     steps:
       - name: Checkout
         uses: actions/checkout@v4
