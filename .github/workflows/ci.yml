@@ -1,5 +1,7 @@
-name: CI
+name: CI/CD
+
 on: push
+
 jobs:
   checkout:
     name: Build and test
@@ -7,7 +9,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Build and run Dev Container task
+      - name: Build devcontainer, test and build debians
         uses: devcontainers/ci@v0.3
         with:
           imageName: ghcr.io/schanzerracing/arwo_advanced_ros2_concepts
@@ -18,9 +20,9 @@ jobs:
             ". /opt/ros/humble/setup.bash
             && colcon build
             && colcon test --return-code-on-test-failure
-            && colcon test-result --verbose
             && .devcontainer/build_debs.sh"
-      - name: Upload debians
-        uses: actions/upload-artifact@v4
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
         with:
-          path: src/*.deb
+          files: src/*.deb
