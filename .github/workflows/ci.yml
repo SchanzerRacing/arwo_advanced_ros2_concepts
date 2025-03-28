@@ -18,4 +18,9 @@ jobs:
             ". /opt/ros/humble/setup.bash
             && colcon build
             && colcon test --return-code-on-test-failure
-            && colcon test-result --verbose"
+            && colcon test-result --verbose
+            && .devcontainer/build_debs.sh"
+      - name: Upload debians
+        uses: actions/upload-artifact@v4
+        with:
+          path: '*.deb'

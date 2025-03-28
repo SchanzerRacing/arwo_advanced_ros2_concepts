@@ -15,6 +15,11 @@ RUN apt update -q \
     ros-humble-rqt-common-plugins \
     ros-humble-nav2-lifecycle-manager \
     ros-humble-image-publisher \
+    python3-bloom \
+    python3-rosdep \
+    fakeroot \
+    debhelper \
+    dh-python \
     && apt clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
