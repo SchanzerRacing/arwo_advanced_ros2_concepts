@@ -1,0 +1,43 @@
+{
+    "ros.distro": "humble",
+    "editor.rulers": [99],
+    "editor.tabSize": 2,
+    "editor.detectIndentation": true,
+    "files.autoSave": "afterDelay",
+    "files.trimTrailingWhitespace": true,
+    "files.trimFinalNewlines": true,
+    "files.insertFinalNewline": true,
+    "files.associations": {
+        "*.xacro": "xml",
+        "*.sdf": "xml",
+        "*.world": "xml"
+    },
+    "[cpp]": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "zachflower.uncrustify"
+    },
+    "uncrustify.configPath.linux": ".vscode/uncrustify.cfg",
+    "[python]": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "ms-python.black-formatter",
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": "explicit"
+        },
+    },
+    "isort.args":["--settings-path", "${workspaceFolder}/.vscode/.isort.cfg"],
+    "flake8.args": ["--config", ".flake8"],
+    "black-formatter.args": [
+        "--skip-string-normalization",
+        "--line-length=99"
+    ],
+    "python.autoComplete.extraPaths": [
+        "/opt/ros/humble/lib/python3.10/site-packages",
+        "/opt/ros/humble/local/lib/python3.10/dist-packages",
+        "${workspaceFolder}/install/**"
+    ],
+    "python.analysis.extraPaths": [
+        "/opt/ros/humble/lib/python3.10/site-packages",
+        "/opt/ros/humble/local/lib/python3.10/dist-packages",
+        "${workspaceFolder}/install/**"
+    ],
+}
