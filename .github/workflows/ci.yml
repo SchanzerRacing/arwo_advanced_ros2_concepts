@@ -12,7 +12,7 @@ jobs:
         with:
           imageName: ghcr.io/schanzerracing/arwo_advanced_ros2_concepts
           cacheFrom: ghcr.io/schanzerracing/arwo_advanced_ros2_concepts
-          push: always
+          push: never
           runCmd: >
             /bin/bash -c
             ". /opt/ros/humble/setup.bash
