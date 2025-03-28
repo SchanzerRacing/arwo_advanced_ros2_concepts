@@ -20,9 +20,7 @@ jobs:
             && colcon test --return-code-on-test-failure
             && colcon test-result --verbose
             && .devcontainer/build_debs.sh"
-      - name: Where are them debs?
-        run: ls -a
       - name: Upload debians
         uses: actions/upload-artifact@v4
         with:
-          path: '*.deb'
+          path: src/*.deb
