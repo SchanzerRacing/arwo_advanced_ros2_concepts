@@ -21,8 +21,9 @@ jobs:
       - name: Build devcontainer, test and build debians
         uses: devcontainers/ci@v0.3
         with:
-          imageName: ghcr.io/schanzerracing/arwo_advanced_ros2_concepts
           cacheFrom: ghcr.io/schanzerracing/arwo_advanced_ros2_concepts
+          imageName: ghcr.io/schanzerracing/arwo_advanced_ros2_concepts
+          imageTag: ${{ github.ref_name }}
           push: always
           runCmd: >
             /bin/bash -c
@@ -32,6 +33,5 @@ jobs:
             && .devcontainer/build_debs.sh"
       - name: Create Release
         uses: softprops/action-gh-release@v2
-        if: startsWith(github.ref, 'refs/tags/')
         with:
           files: src/*.deb
